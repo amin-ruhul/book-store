@@ -6,7 +6,7 @@ const nextPageBtn = document.getElementById("next-page");
 const pageNumbersEl = document.getElementById("page-numbers");
 const loadingEl = document.getElementById("loading");
 const errorEl = document.getElementById("error");
-const paginationSlot = document.getElementById("pagination-slot");
+const pagination = document.getElementById("pagination");
 
 const createBookState = () => {
   return {
@@ -18,9 +18,17 @@ const createBookState = () => {
 const bookState = createBookState();
 const cache = {};
 
+function showLoading() {
+  loadingEl.style.display = "grid";
+}
+
+function hideLoading() {
+  loadingEl.style.display = "none";
+}
+
 async function fetchBooks(page = 1, search = "", genre = "") {
   try {
-    loadingEl.style.display = "grid";
+    showLoading();
     errorEl.style.display = "none";
     booksListEl.innerHTML = "";
 
@@ -41,9 +49,6 @@ async function fetchBooks(page = 1, search = "", genre = "") {
 
     cache[url] = data;
 
-    // Cache the response
-    //setCachedData(url, data);
-
     return data;
   } catch (error) {
     console.error("Error fetching books:", error);
@@ -51,7 +56,7 @@ async function fetchBooks(page = 1, search = "", genre = "") {
     errorEl.style.display = "block";
     throw error;
   } finally {
-    loadingEl.style.display = "none";
+    hideLoading();
   }
 }
 
@@ -63,7 +68,7 @@ function renderBooks(books) {
 }
 
 function updatePagination() {
-  paginationSlot.style.display = "block";
+  pagination.style.display = "flex";
   prevPageBtn.disabled = bookState.currentPage === 1;
   nextPageBtn.disabled = bookState.currentPage === bookState.totalPages;
 }
@@ -151,6 +156,7 @@ async function initializeDom(page, search, genre) {
   genreFilterEl.value = genre;
   searchEl.value = search;
   renderBooks(data.results);
+  updatePagination();
 }
 
 function setSearchAndFilterInitialValue(search, genre) {
@@ -167,8 +173,8 @@ async function onCreated() {
   initializeDom(page, search, genre);
 }
 
-async function init() {
+async function loadHomePage() {
   onCreated();
 }
 
-init();
+loadHomePage();

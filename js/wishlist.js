@@ -7,9 +7,9 @@ function renderWishlist(books) {
   });
 }
 
-function init() {
+function loadWishListPage() {
   const books = Object.values(wishlist);
   renderWishlist(books);
 }
 
-init();
+loadWishListPage();

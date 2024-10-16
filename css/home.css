@@ -23,19 +23,14 @@
   gap: 1rem;
 }
 
-.pagination {
-  display: flex;
+#pagination {
+  display: none;
   justify-content: center;
   align-items: center;
   margin: 2rem 0;
 }
 
-#pagination-slot{
-  display: none;
-}
-
-
-.pagination button {
+#pagination button {
   background-color: var(--primary-color);
   color: var(--card-background);
   border: none;
@@ -45,23 +40,13 @@
   transition: background-color 0.3s ease;
 }
 
-.pagination button:hover {
+#pagination button:hover {
   background-color: var(--secondary-color);
 }
 
-#page-numbers {
-  display: flex;
-}
-
-#page-numbers button {
-  background-color: var(--card-background);
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-}
-
-#page-numbers button.active {
-  background-color: var(--primary-color);
-  color: var(--card-background);
+#pagination button:disabled {
+  background-color: var(--secondary-color);
+  cursor: not-allowed;
 }
 
 .skeleton-grid {
